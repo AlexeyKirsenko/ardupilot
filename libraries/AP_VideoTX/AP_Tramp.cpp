@@ -352,7 +352,14 @@ void AP_Tramp::process_requests()
             } else if (!is_race_lock_enabled() && vtx.update_power()) {
                 debug("Updating power to %umw\n", vtx.get_configured_power_mw());
                 // Power can be and needs to be updated, issue request
-                send_command('P', vtx.get_configured_power_mw());
+                int power_dbm = vtx.get_configured_power_dbm(); // Retrieve the configured power
+
+                // Check the value of power_dbm and decide how to send it
+                if (power_dbm == 0 || power_dbm == 25) {
+                    send_command('P', power_dbm); // Send as it is if 0 or 25
+                } else {
+                    send_command('P', power_dbm * 10); // Multiply by 10 otherwise
+                }
 
                 // Set flag
                 configUpdateRequired = true;

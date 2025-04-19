@@ -1753,6 +1753,19 @@ void AP_OSD_Screen::draw_horizon(uint8_t x, uint8_t y)
         backend->write(x-1,y, false, "%c%c%c", SYMBOL(SYM_AH_CENTER_LINE_LEFT), SYMBOL(SYM_AH_CENTER), SYMBOL(SYM_AH_CENTER_LINE_RIGHT));
     }
 
+    // Draw a small circle at x=120, y=200
+    draw_circle(120, 200, 2); // Radius is chosen to be 2 for a small circle
+}
+
+void AP_OSD_Screen::draw_circle(uint8_t x, uint8_t y, uint8_t radius)
+{
+    for (int dy = -radius; dy <= radius; dy++) {
+        for (int dx = -radius; dx <= radius; dx++) {
+            if ((dx*dx + dy*dy) <= (radius * radius)) {
+                backend->write(x + dx, y + dy, false, "%c", SYMBOL(SYM_DOT));
+            }
+        }
+    }
 }
 
 void AP_OSD_Screen::draw_distance(uint8_t x, uint8_t y, float distance)
