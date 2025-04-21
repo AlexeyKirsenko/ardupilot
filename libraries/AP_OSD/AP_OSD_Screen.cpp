@@ -1697,6 +1697,7 @@ void AP_OSD_Screen::draw_gspeed(uint8_t x, uint8_t y)
     draw_speed(x + 1, y, angle, length);
 }
 
+
 //Thanks to betaflight/inav for simple and clean artificial horizon visual design
 void AP_OSD_Screen::draw_horizon(uint8_t x, uint8_t y)
 {
@@ -1753,16 +1754,49 @@ void AP_OSD_Screen::draw_horizon(uint8_t x, uint8_t y)
         backend->write(x-1,y, false, "%c%c%c", SYMBOL(SYM_AH_CENTER_LINE_LEFT), SYMBOL(SYM_AH_CENTER), SYMBOL(SYM_AH_CENTER_LINE_RIGHT));
     }
 
+    //const float GRAVITY = 9.81f; // Acceleration due to gravity (m/s^2)
+    //const float OBJECT_MASS = 4.0f; // Mass of the object (kg) - fixed
+    //const uint8_t SYM_IP = 0xC0; // Example impact point symbol starting code
+    //const uint8_t MAX_X = 30; // OSD width in characters
+    //const uint8_t MAX_Y = 16; // OSD height in characters
+    //const float HORIZONTAL_SCALE = MAX_X / 100.0f; // Scale for horizontal distance mapping
+    //const float VERTICAL_SCALE = MAX_Y / 100.0f; // Scale for vertical mapping (if needed)
+    //const float koef_km_h_to_m_sec = 1000/(60*60);
+    //SYMBOL(SYM_AH_CENTER)
+
+    // Get altitude and airspeed, scaled to appropriate units
+    //float aspd = 0.0f;
+    //float alt = 0.0f;
+    
+    //bool have_speed_estimate = ahrs.airspeed_estimate(aspd);
+    //if (!have_speed_estimate) { aspd = 0.0f; }
+    //ahrs.get_relative_position_D_home(alt);
+    //float scaled_aspd = u_scale(SPEED, aspd);
+    //float scaled_alt = u_scale(ALTITUDE, -alt);
+    //printf("scaled_aspd: %4.1f", float(scaled_aspd));
+    //printf("scaled_alt: %4.1f", float(scaled_alt));
+    //float v_x = scaled_aspd*koef_km_h_to_m_sec;
+    //float v_z = sqrtf(2 * scaled_alt * GRAVITY);
+    //float t = sqrtf(2 * scaled_alt / GRAVITY);
+    //touch_angle = grads(Math.atan(v_z/v_x));
+    //float dist_x = v_x * t;
+    //float hypo = sqrtf(scaled_alt*scaled_alt + dist_x * dist_x);
+    //float target_y=degrees(asin(dist_x/hypo));
+    //int dty = floorf(target_y);
+    //printf("dty: %f", float(dty));
+    //backend->write(10, 10, false, "%c", SYMBOL(SYM_AH_CENTER));
     // Draw a small circle at x=120, y=200
-    draw_circle(120, 200, 2); // Radius is chosen to be 2 for a small circle
+    //draw_circle(10, dty, 2); // Radius is chosen to be 2 for a small circle
 }
 
 void AP_OSD_Screen::draw_circle(uint8_t x, uint8_t y, uint8_t radius)
 {
+
+
     for (int dy = -radius; dy <= radius; dy++) {
         for (int dx = -radius; dx <= radius; dx++) {
             if ((dx*dx + dy*dy) <= (radius * radius)) {
-                backend->write(x + dx, y + dy, false, "%c", SYMBOL(SYM_DOT));
+                backend->write(x + dx, y + dy, false, "%c", SYMBOL(SYM_AH_CENTER));
             }
         }
     }
